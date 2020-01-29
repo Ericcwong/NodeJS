@@ -1,3 +1,4 @@
+
 const colors = {
     green: {
       wrapperBackground: "#E6E1C3",
@@ -24,7 +25,6 @@ const colors = {
       photoBorderColor: "white"
     }
   };
-  
   function generateHTML(data) {
     return `<!DOCTYPE html>
   <html lang="en">
@@ -170,6 +170,16 @@ const colors = {
               zoom: .75; 
             } 
            }
-        </style>`
+        </style>
+        <body>
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h1 class="display-4">Hi! My name is ${data.name}</h1>
+                </div>
+            </div>
+</body>
+        
+        `
           }
-  
+module.exports = generateHTML;
+module.exports = colors
