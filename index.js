@@ -21,7 +21,7 @@ function userColorChoice(){
         type: "list",
         name: "color",
         message: "What color would you like your PDF to be?",
-        choice: ["Green", "Blue", "Pink", "Red"]
+        choices: ["Green", "Blue", "Pink", "Red"]
     });
     return color;
 }
@@ -39,10 +39,17 @@ async function init(){
         // As the same as the call above it. After userColorChoice() function is executed. Take the color choice and assigns it to an object
         const {color} = await userColorChoice();
         
-        
+        let {data} = await githubAPICall(username);
+         //this data.color = color is for generateHTML.js to use
+        data.color = color;
+        const html = generateHTML(data);
+        writeFileAsync("index.html", html).then(function() {
+      console.log("Successfully wrote to index.html");
+    })
     }
     //if the error is outside of the try block it would trip catch
     catch(err){
         console.log(err);
     }
 }
+init();
