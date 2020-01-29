@@ -6,75 +6,43 @@ const colors = require("./generateHTML")
 const generateHTML = require("./generateHTML");
 const writeFileAsync = util.promisify(fs.writeFile);
 
- function promptUser(){
-   return inquirer.prompt([
-    {
+//function that prompts the user what their github user name is and sets it as a constant userNameInput
+function userNameInput(){
+    const username = inquirer.prompt({
         type: "input",
         name: "username",
-        message: "What is your Github username?"
-    },
-    {
-      type: "list",
-      name: "color",
-      message: "What color would you like for your Github PDF?",
-      choices:["Green","Blue","Pink","Red"]
-    }
-     ]);
+        message:"What is your Github username?"
+    });
+    return username;
 }
-function githubPull(){
-    const queryURL = axios.get(`https://api.github.com/users/${username}`)
-    return queryURL;
+//function that prompts the user what their color choice is out of the four options
+function userColorChoice(){
+    const color = inquirer.prompt({
+        type: "list",
+        name: "color",
+        message: "What color would you like your PDF to be?",
+        choice: ["Green", "Blue", "Pink", "Red"]
+    });
+    return color;
 }
-
-// promptUser().then(function(data){
-    
-//     const html = generateHTML(data);
-//     return writeFileAsync("index.html", html);
-// }).then(function(){
-//     console.log("Success!");
-// })
-// .catch(function(err){
-//     console.log(err);
-// });
+//Calls the api and assigns the value to be username
+function githubAPICall(username){
+    let data = axios.get(`https://api.github.com/users/${username}`)
+    return data;
+}
+//async function always returns with a promise 
 async function init(){
+    //try test for errors that are within the block
     try{
-        const data = await promptUser();
-        const html = generateHTML;
+        // After userNameInputs function is executed, assign its value to let to an object
+        let {username} = await userNameInput();
+        // As the same as the call above it. After userColorChoice() function is executed. Take the color choice and assigns it to an object
+        const {color} = await userColorChoice();
         
-        await writeFileAsync("index.html", html);
-        console.log("Success!");
-    }catch(err){
+        
+    }
+    //if the error is outside of the try block it would trip catch
+    catch(err){
         console.log(err);
     }
 }
-init();
-
-
-
-
-
-
-
-
-// function test(){
-//     console.log(username);
-//     console.log(color);
-// }
-// promptUser()
-// .then(function({ username }){
-//     const queryURL = `https://api.github.com/users/${username}`;
-//     console.log(generateHTML);
-//     axios
-//     .get(queryURL)
-//     .then(function(res){
-//         const repoName = res.data.name;
-//         const followerCount = res.data.followers;
-//         const followingCount = res.data.following;
-//     }).then(function(answer){
-//         const html = generateHTML(answer);
-//         return writeFileAsync("test.html", html);
-//     });
-    
-// }).catch(function(err){
-//     console.log(err);
-// });

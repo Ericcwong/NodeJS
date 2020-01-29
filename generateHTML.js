@@ -177,9 +177,6 @@ const colors = {
                     <h1 class="display-4">Hi! My name is ${data.name}</h1>
                 </div>
             </div>
-</body>
-        
-        `
+        </body>`
           }
 module.exports = generateHTML;
-module.exports = colors
