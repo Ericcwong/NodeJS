@@ -34,7 +34,7 @@ function githubAPIStar(username){
     let gitStars = axios.get(`https://api.github.com/users/${username}/starred`)
     return gitStars
 }
-//Generate PDF through puppeteer
+
 
 //async function always returns with a promise 
 async function init(){
@@ -58,6 +58,7 @@ async function init(){
 
 
     });
+    //Generate PDF through puppeteer
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
