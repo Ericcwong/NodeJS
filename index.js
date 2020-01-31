@@ -1,3 +1,5 @@
+const inquirer = require("inquirer");
+const fs = require("fs-extra");
 const util = require("util");
 const axios = require("axios");
 const puppeteer = require("puppeteer");
