@@ -1,10 +1,7 @@
-const inquirer = require("inquirer");
-const fs = require("fs");
 const util = require("util");
 const axios = require("axios");
-// const pdf = require("html-pdf");
-// const options = { formate: "Letter"};
-const generateHTML = require("./generateHTML");
+const puppeteer = require("puppeteer");
+const generateHTML = require("./generateHTML"); 
 const writeFileAsync = util.promisify(fs.writeFile);
 
 //function that prompts the user what their github user name is and sets it as a constant userNameInput
@@ -36,9 +33,7 @@ function githubAPIStar(username){
     return gitStars
 }
 //Generate PDF through puppeteer
-(async function(){
 
-})
 //async function always returns with a promise 
 async function init(){
     //try test for errors that are within the block
@@ -59,7 +54,22 @@ async function init(){
         console.log("Successfully wrote to index.html");
         
 
+
     });
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+
+    await page.setContent(html);
+    await page.emulateMedia("screen");
+    await page.pdf({
+        path: `${username}.pdf.pdf`,
+        format: "A4",
+        printBackground: true
+
+    });
+    console.log("Successfully created PDF file.");
+    await browser.close();
+    process.exit();
     }
     //if the error is outside of the try block it would trip catch
     catch(err){
