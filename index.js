@@ -64,7 +64,7 @@ async function init(){
     await page.pdf({
         path: `${username}.pdf.pdf`,
         format: "A4",
-        printBackground: true
+        printBackground: true 
 
     });
     console.log("Successfully created PDF file.");
